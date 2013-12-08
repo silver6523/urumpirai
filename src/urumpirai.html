@@ -7,10 +7,83 @@
 </head>
 <body>
 
+<div style="display:none">
 
-<script src="../lib/jquery-2.0.3.js"></script>
+    <textarea id="ThingText">[{"name":"thing 1"},{"name":"thing 2"},{"name":"thing 3"}]</textarea>
+    <button type="button" onclick="Urumpirai.add_things($('#ThingText').html())">transfer to things</button>
+
+</div>
+<h2>Things</h2>
+<button type="button" onclick="show_list_of_things()">show</button>
+<div id="ThingList"></div>
+
+<h2>Categories</h2>
+<div id="CategoriesList"></div>
+
+<input type="text" id="ThingName"><button type="button" onclick="Urumpirai.add_thing($('#ThingName').val())">add</button>
+
+<div id="CategoryThings">
+
+</div>
+
+<script src="../lib/jquery-2.0.3.min.js"></script>
 <script src="../lib/handlebars-v1.1.2.js"></script>
 <script src="../lib/app-1.0.0.js"></script>
+<script src="urumpirai.js"></script>
+
+<script id="template-things_list" type="text/x-handlebars-template">
+    <ul>
+        {{#each this}}
+        <li>
+            <button type="button" onclick="Urumpirai.delete_thing({{@index}})">x</button>
+            {{name}}
+        </li>
+        {{/each}}
+    </ul>
+</script>
+
+<script id="template-categories_navigation" type="text/x-handlebars-template">
+    {{#each this}}
+        <button type="button" {{#if active}}disabled="disabled"{{/if}}onclick="switch_to_category({{@index}});">{{name}}</button>
+    {{/each}}
+</script>
+
+<script id="template-category_things" type="text/x-handlebars-template">
+    <ul>
+        {{#each this}}
+        <li>
+            <input type="checkbox" />
+            {{name}}
+        </li>
+        {{/each}}
+    </ul>
+
+</script>
+
+<script>
+
+    $('document').ready(
+            function(){
+                Urumpirai.init();
+                show_list_of_things();
+                show_categories_navigation();
+                //Urumpirai.add_things($('#ThingText').html())
+            }
+    );
+
+    var show_list_of_things = function(){
+        App.Template.render('#ThingList', 'template-things_list', Urumpirai.things);
+    }
+    var show_categories_navigation = function(){
+        App.Template.render('#CategoriesList', 'template-categories_navigation', Urumpirai.categories);
+    }
+    var switch_to_category = function(position){
+        Urumpirai.set_active_category(position);
+        show_categories_navigation();
+        App.Template.render('#CategoryThings', 'template-category_things', Urumpirai.things);
+    }
+
+</script>
 
 </body>
 </html>
