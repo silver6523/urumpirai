@@ -30,6 +30,20 @@ Urumpirai should work local without any server communication.
 
 ## Specification
 
+###  Functionalities
+
+#### Add things
+
+#### Delete things
+
+#### Add categories
+
+#### Delete categories
+
+#### Value categories
+
+#### Assign things to categories
+
 ### Technologies
 
 The following technologies will be used by the application:
