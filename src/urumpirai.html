@@ -16,8 +16,22 @@
 
 <!-- ----------------------------------------------------------- -->
 
-
-
+<ul class="nav nav-tabs" id="urumpiraiTabs">
+    <li><a href="#things" data-toggle="tab">Things</a></li>
+    <li><a href="#categories" data-toggle="tab">Categories</a></li>
+    <li><a href="#assign" data-toggle="tab">Assign</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane" id="things">
+        <input type="text" id="thingname" /> <button type="button" onclick="add_things()"> add </button>
+        <div id="ThingList"></div>
+    </div>
+    <div class="tab-pane" id="categories">
+        <input type="text" id="categoryname" /> <button type="button" onclick=""> add </button>
+        <div id="CategoryList"></div>
+    </div>
+    <div class="tab-pane" id="assign">Zu ordnen</div>
+</div>
 
 
 <!-- ----------------------------------------------------------- -->
@@ -75,9 +89,8 @@
     $('document').ready(
             function(){
                 Urumpirai.init();
-                show_list_of_things();
-                show_categories_navigation();
-                //Urumpirai.add_things($('#ThingText').html())
+                $('#urumpirai a:first').tab('show');
+
             }
     );
 
@@ -91,6 +104,13 @@
         Urumpirai.set_active_category(position);
         show_categories_navigation();
         App.Template.render('#CategoryThings', 'template-category_things', Urumpirai.things);
+    }
+
+    var add_things = function(){
+        Urumpirai.add_thing($('#thingname').val());
+        App.Template.render('#ThingList', 'template-things_list', Urumpirai.things);
+        $('#thingname').val('');
+        $('#thingname').focus();
     }
 
 </script>
